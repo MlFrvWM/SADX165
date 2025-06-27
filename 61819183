@@ -79,7 +79,6 @@ Killer:AddSwitch("Auto Bad Karma", function(bool)
 	end)
 end)
 
-Killer:AddLabel("Whitelisting")
 Killer:AddTextBox("Whitelist", function(text)
 	local target = Players:FindFirstChild(text)
 	if target then
@@ -94,7 +93,35 @@ Killer:AddTextBox("UnWhitelist", function(text)
 	end
 end)
 
-Killer:AddLabel("Auto Killing")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local friendWhitelistActive = false
+
+Killer:AddSwitch("Auto Whitelist Friends", function(state)
+	friendWhitelistActive = state
+
+	if state then
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player ~= LocalPlayer and LocalPlayer:IsFriendsWith(player.UserId) then
+				playerWhitelist[player.Name] = true
+			end
+		end
+
+		Players.PlayerAdded:Connect(function(player)
+			if friendWhitelistActive and player ~= LocalPlayer and LocalPlayer:IsFriendsWith(player.UserId) then
+				playerWhitelist[player.Name] = true
+			end
+		end)
+	else
+		for name in pairs(playerWhitelist) do
+			local friend = Players:FindFirstChild(name)
+			if friend and LocalPlayer:IsFriendsWith(friend.UserId) then
+				playerWhitelist[name] = nil
+			end
+		end
+	end
+end)
+
 Killer:AddSwitch("Auto Kill", function(bool)
     autoKill = bool
 
@@ -215,28 +242,54 @@ Killer:AddSwitch("Kill Target(s)", function(state)
 	end)
 end)
 
-Killer:AddSwitch("Spy Player", function(bool)
-	spying = bool
-	if not spying then
-		local cam = workspace.CurrentCamera
-		cam.CameraSubject = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") or LocalPlayer
-		return
-	end
-	task.spawn(function()
-		while spying do
-			local target = Players:FindFirstChild(targetPlayerName)
-			if target and target ~= LocalPlayer then
-				local humanoid = target.Character and target.Character:FindFirstChild("Humanoid")
-				if humanoid then
-					workspace.CurrentCamera.CameraSubject = humanoid
-				end
-			end
-			task.wait(0.1)
-		end
-	end)
+local spyTargetDropdown = Killer:AddDropdown("Select Spy Target", function(name)
+    targetPlayerName = name
 end)
 
-Killer:AddLabel("Punching Tool")
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= LocalPlayer then
+        spyTargetDropdown:Add(player.Name)
+    end
+end
+
+Players.PlayerAdded:Connect(function(player)
+    if player ~= LocalPlayer then
+        spyTargetDropdown:Add(player.Name)
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    if player ~= LocalPlayer then
+        spyTargetDropdown:Clear()
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer then
+                spyTargetDropdown:Add(plr.Name)
+            end
+        end
+    end
+end)
+
+Killer:AddSwitch("Spy Player", function(bool)
+    spying = bool
+    if not spying then
+        local cam = workspace.CurrentCamera
+        cam.CameraSubject = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") or LocalPlayer
+        return
+    end
+    task.spawn(function()
+        while spying do
+            local target = Players:FindFirstChild(targetPlayerName)
+            if target and target ~= LocalPlayer then
+                local humanoid = target.Character and target.Character:FindFirstChild("Humanoid")
+                if humanoid then
+                    workspace.CurrentCamera.CameraSubject = humanoid
+                end
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
+
 Killer:AddSwitch("Auto Equip Punch", function(state)
 	autoEquipPunch = state
 	task.spawn(function()
