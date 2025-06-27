@@ -21,7 +21,7 @@ local itensParaRemover = {
     "Tropical Shake"
 }
 
-features:AddSwitch("Clear Inventory", function(state)
+Player:AddSwitch("Clear Inventory", function(state)
     if state then
         for _, item in pairs(Backpack:GetChildren()) do
             if item:IsA("Tool") and table.find(itensParaRemover, item.Name) then
