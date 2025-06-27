@@ -133,44 +133,45 @@ end)
 
 Killer:AddLabel("Multi Targeting")
 
-local targetDropdown = Killer:AddDropdown("Select Target", {}, function(name)
-    if name and not table.find(targetPlayerNames, name) then
-        table.insert(targetPlayerNames, name)
+-- Armazena os nomes selecionados como alvo
+local targetDropdownOptions = {}
+local function refreshDropdown()
+    local options = {}
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and not playerWhitelist[player.Name] then
+            table.insert(options, player.Name)
+        end
     end
+
+    -- Remove o dropdown anterior e cria um novo com opções atualizadas
+    Killer:RemoveElement("Select Target")
+    Killer:AddDropdown("Select Target", options, function(name)
+        if name and not table.find(targetPlayerNames, name) then
+            table.insert(targetPlayerNames, name)
+        end
+    end)
+end
+
+-- Cria o primeiro dropdown
+refreshDropdown()
+
+-- Atualiza o dropdown ao entrar ou sair um player
+Players.PlayerAdded:Connect(function(player)
+    task.wait(1)
+    refreshDropdown()
 end)
 
+Players.PlayerRemoving:Connect(function(player)
+    refreshDropdown()
+end)
+
+-- Botão para remover da lista
 Killer:AddTextBox("Remove Target", function(name)
     for i, v in ipairs(targetPlayerNames) do
         if v == name then
             table.remove(targetPlayerNames, i)
             break
-        end
-    end
-end)
-
-local function updateDropdown()
-    local options = {}
-
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and not availableTargets[player.Name] then
-            table.insert(options, player.Name)
-            availableTargets[player.Name] = true
-        end
-    end
-
-Players.PlayerAdded:Connect(function(player)
-    if player ~= LocalPlayer and not availableTargets[player.Name] then
-        targetDropdown:Add(player.Name)
-        availableTargets[player.Name] = true
-    end
-end)
-
-Players.PlayerRemoving:Connect(function(player)
-    if availableTargets[player.Name] then
-        availableTargets[player.Name] = nil
-        targetDropdown:Clear()
-        for name in pairs(availableTargets) do
-            targetDropdown:Add(name)
         end
     end
 end)
