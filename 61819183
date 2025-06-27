@@ -5,6 +5,21 @@ local window = library:AddWindow("Sad Private", {
     min_size = Vector2.new(740, 500),
     can_resize = false,
 })
+local Player = window:AddTab("Player")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:WaitForChild("Backpack")
+
+Player:AddSwitch("Clear Inventory", function(state)
+    if state then
+        for _, item in pairs(Backpack:GetChildren()) do
+            if item:IsA("Tool") and item.Name ~= "Protein Egg" then
+                item:Destroy()
+            end
+        end
+    end
+end)
 
 local Killer = window:AddTab("Killing")
 local Players = game:GetService("Players")
