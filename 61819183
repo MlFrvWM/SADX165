@@ -1,35 +1,10 @@
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library//main/Library", true))()
 
 local window = library:AddWindow("Sad Private", {
-    main_color = Color3.fromRGB(158, 158, 158),
+    main_color = Color3.fromRGB(8, 7, 128),
     min_size = Vector2.new(740, 500),
     can_resize = false,
 })
-local Player = window:AddTab("Player")
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local Backpack = LocalPlayer:WaitForChild("Backpack")
-
-local itensParaRemover = {
-    "Resistant Bar",
-    "Energy Bar",
-    "Protein Bar",
-    "Protein Shake",
-    "Energy Shake",
-    "Ultra Shake",
-    "Tropical Shake"
-}
-
-Player:AddSwitch("Clear Inventory", function(state)
-    if state then
-        for _, item in pairs(Backpack:GetChildren()) do
-            if item:IsA("Tool") and table.find(itensParaRemover, item.Name) then
-                item:Destroy()
-            end
-        end
-    end
-end)
 
 local Killer = window:AddTab("Killing")
 local Players = game:GetService("Players")
@@ -47,106 +22,79 @@ local targetDropdownItems = {}
 local availableTargets = {}
 
 Killer:AddSwitch("Auto Good Karma", function(bool)
-	autoGoodKarma = bool
-	task.spawn(function()
-		while autoGoodKarma do
-			local playerChar = LocalPlayer.Character
-			local rightHand = playerChar and playerChar:FindFirstChild("RightHand")
-			local leftHand = playerChar and playerChar:FindFirstChild("LeftHand")
-			if playerChar and rightHand and leftHand then
-				for _, target in ipairs(Players:GetPlayers()) do
-					if target ~= LocalPlayer then
-						local evilKarma = target:FindFirstChild("evilKarma")
-						local goodKarma = target:FindFirstChild("goodKarma")
-						if evilKarma and goodKarma and evilKarma:IsA("IntValue") and goodKarma:IsA("IntValue") and evilKarma.Value > goodKarma.Value then
-							local rootPart = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
-							if rootPart then
-								firetouchinterest(rightHand, rootPart, 1)
-								firetouchinterest(leftHand, rootPart, 1)
-								firetouchinterest(rightHand, rootPart, 0)
-								firetouchinterest(leftHand, rootPart, 0)
-							end
-						end
-					end
-				end
-			end
-			task.wait(0.01)
-		end
-	end)
+    autoGoodKarma = bool
+    task.spawn(function()
+        while autoGoodKarma do
+            local playerChar = LocalPlayer.Character
+            local rightHand = playerChar and playerChar:FindFirstChild("RightHand")
+            local leftHand = playerChar and playerChar:FindFirstChild("LeftHand")
+            if playerChar and rightHand and leftHand then
+                for _, target in ipairs(Players:GetPlayers()) do
+                    if target ~= LocalPlayer then
+                        local evilKarma = target:FindFirstChild("evilKarma")
+                        local goodKarma = target:FindFirstChild("goodKarma")
+                        if evilKarma and goodKarma and evilKarma:IsA("IntValue") and goodKarma:IsA("IntValue") and evilKarma.Value > goodKarma.Value then
+                            local rootPart = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
+                            if rootPart then
+                                firetouchinterest(rightHand, rootPart, 1)
+                                firetouchinterest(leftHand, rootPart, 1)
+                                firetouchinterest(rightHand, rootPart, 0)
+                                firetouchinterest(leftHand, rootPart, 0)
+                            end
+                        end
+                    end
+                end
+            end
+            task.wait(0.01)
+        end
+    end)
 end)
 
 Killer:AddSwitch("Auto Bad Karma", function(bool)
-	autoBadKarma = bool
-	task.spawn(function()
-		while autoBadKarma do
-			local playerChar = LocalPlayer.Character
-			local rightHand = playerChar and playerChar:FindFirstChild("RightHand")
-			local leftHand = playerChar and playerChar:FindFirstChild("LeftHand")
-			if playerChar and rightHand and leftHand then
-				for _, target in ipairs(Players:GetPlayers()) do
-					if target ~= LocalPlayer then
-						local evilKarma = target:FindFirstChild("evilKarma")
-						local goodKarma = target:FindFirstChild("goodKarma")
-						if evilKarma and goodKarma and evilKarma:IsA("IntValue") and goodKarma:IsA("IntValue") and goodKarma.Value > evilKarma.Value then
-							local rootPart = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
-							if rootPart then
-								firetouchinterest(rightHand, rootPart, 1)
-								firetouchinterest(leftHand, rootPart, 1)
-								firetouchinterest(rightHand, rootPart, 0)
-								firetouchinterest(leftHand, rootPart, 0)
-							end
-						end
-					end
-				end
-			end
-			task.wait(0.01)
-		end
-	end)
+    autoBadKarma = bool
+    task.spawn(function()
+        while autoBadKarma do
+            local playerChar = LocalPlayer.Character
+            local rightHand = playerChar and playerChar:FindFirstChild("RightHand")
+            local leftHand = playerChar and playerChar:FindFirstChild("LeftHand")
+            if playerChar and rightHand and leftHand then
+                for _, target in ipairs(Players:GetPlayers()) do
+                    if target ~= LocalPlayer then
+                        local evilKarma = target:FindFirstChild("evilKarma")
+                        local goodKarma = target:FindFirstChild("goodKarma")
+                        if evilKarma and goodKarma and evilKarma:IsA("IntValue") and goodKarma:IsA("IntValue") and goodKarma.Value > evilKarma.Value then
+                            local rootPart = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
+                            if rootPart then
+                                firetouchinterest(rightHand, rootPart, 1)
+                                firetouchinterest(leftHand, rootPart, 1)
+                                firetouchinterest(rightHand, rootPart, 0)
+                                firetouchinterest(leftHand, rootPart, 0)
+                            end
+                        end
+                    end
+                end
+            end
+            task.wait(0.01)
+        end
+    end)
 end)
 
+Killer:AddLabel("Whitelisting")
 Killer:AddTextBox("Whitelist", function(text)
-	local target = Players:FindFirstChild(text)
-	if target then
-		playerWhitelist[target.Name] = true
-	end
+    local target = Players:FindFirstChild(text)
+    if target then
+        playerWhitelist[target.Name] = true
+    end
 end)
 
 Killer:AddTextBox("UnWhitelist", function(text)
-	local target = Players:FindFirstChild(text)
-	if target then
-		playerWhitelist[target.Name] = nil
-	end
+    local target = Players:FindFirstChild(text)
+    if target then
+        playerWhitelist[target.Name] = nil
+    end
 end)
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local friendWhitelistActive = false
-
-Killer:AddSwitch("Auto Whitelist Friends", function(state)
-	friendWhitelistActive = state
-
-	if state then
-		for _, player in ipairs(Players:GetPlayers()) do
-			if player ~= LocalPlayer and LocalPlayer:IsFriendsWith(player.UserId) then
-				playerWhitelist[player.Name] = true
-			end
-		end
-
-		Players.PlayerAdded:Connect(function(player)
-			if friendWhitelistActive and player ~= LocalPlayer and LocalPlayer:IsFriendsWith(player.UserId) then
-				playerWhitelist[player.Name] = true
-			end
-		end)
-	else
-		for name in pairs(playerWhitelist) do
-			local friend = Players:FindFirstChild(name)
-			if friend and LocalPlayer:IsFriendsWith(friend.UserId) then
-				playerWhitelist[name] = nil
-			end
-		end
-	end
-end)
-
+Killer:AddLabel("Auto Killing")
 Killer:AddSwitch("Auto Kill", function(bool)
     autoKill = bool
 
@@ -155,42 +103,6 @@ Killer:AddSwitch("Auto Kill", function(bool)
             local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local rightHand = character:FindFirstChild("RightHand")
             local leftHand = character:FindFirstChild("LeftHand")
-
-            local punch = LocalPlayer.Backpack:FindFirstChild("Punch")
-            if punch and not character:FindFirstChild("Punch") then
-                punch.Parent = character
-            end
-
-            if rightHand and leftHand then
-                for _, target in ipairs(Players:GetPlayers()) do
-                    if target ~= LocalPlayer and not playerWhitelist[target.Name] then
-                        local targetChar = target.Character
-                        local rootPart = targetChar and targetChar:FindFirstChild("HumanoidRootPart")
-                        if rootPart then
-                            pcall(function()
-                                firetouchinterest(rightHand, rootPart, 1)
-                                firetouchinterest(leftHand, rootPart, 1)
-                                firetouchinterest(rightHand, rootPart, 0)
-                                firetouchinterest(leftHand, rootPart, 0)
-                            end)
-                        end
-                    end
-                end
-            end
-
-            task.wait(0.05)
-        end
-    end)
-end)
-
-Killer:AddSwitch("Auto Kill", function(bool)
-    autoKill = bool
-
-    task.spawn(function()
-        while autoKill do
-            local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-            local rightHand = character:WaitForChild("RightHand", 5)
-            local leftHand = character:WaitForChild("LeftHand", 5)
 
             local punch = LocalPlayer.Backpack:FindFirstChild("Punch")
             if punch and not character:FindFirstChild("Punch") then
@@ -264,27 +176,65 @@ Players.PlayerRemoving:Connect(function(player)
     end
 end)
 
-Killer:AddSwitch("Spy Player", function(bool)
-    spying = bool
-    if not spying then
-        local cam = workspace.CurrentCamera
-        cam.CameraSubject = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") or LocalPlayer
-        return
-    end
+Killer:AddSwitch("Kill Target(s)", function(state)
+    killTarget = state
+
     task.spawn(function()
-        while spying do
-            local target = Players:FindFirstChild(targetPlayerName)
-            if target and target ~= LocalPlayer then
-                local humanoid = target.Character and target.Character:FindFirstChild("Humanoid")
-                if humanoid then
-                    workspace.CurrentCamera.CameraSubject = humanoid
+        while killTarget do
+            local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+            local punch = LocalPlayer.Backpack:FindFirstChild("Punch")
+            if punch and not character:FindFirstChild("Punch") then
+                punch.Parent = character
+            end
+
+            local rightHand = character:WaitForChild("RightHand", 5)
+            local leftHand = character:WaitForChild("LeftHand", 5)
+
+            if rightHand and leftHand then
+                for _, name in ipairs(targetPlayerNames) do
+                    local target = Players:FindFirstChild(name)
+                    if target and target ~= LocalPlayer then
+                        local rootPart = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
+                        if rootPart then
+                            pcall(function()
+                                firetouchinterest(rightHand, rootPart, 1)
+                                firetouchinterest(leftHand, rootPart, 1)
+                                firetouchinterest(rightHand, rootPart, 0)
+                                firetouchinterest(leftHand, rootPart, 0)
+                            end)
+                        end
+                    end
                 end
             end
-            task.wait(0.1)
+
+            task.wait(0.05)
         end
     end)
 end)
 
+Killer:AddSwitch("Spy Player", function(bool)
+	spying = bool
+	if not spying then
+		local cam = workspace.CurrentCamera
+		cam.CameraSubject = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") or LocalPlayer
+		return
+	end
+	task.spawn(function()
+		while spying do
+			local target = Players:FindFirstChild(targetPlayerName)
+			if target and target ~= LocalPlayer then
+				local humanoid = target.Character and target.Character:FindFirstChild("Humanoid")
+				if humanoid then
+					workspace.CurrentCamera.CameraSubject = humanoid
+				end
+			end
+			task.wait(0.1)
+		end
+	end)
+end)
+
+Killer:AddLabel("Punching Tool")
 Killer:AddSwitch("Auto Equip Punch", function(state)
 	autoEquipPunch = state
 	task.spawn(function()
