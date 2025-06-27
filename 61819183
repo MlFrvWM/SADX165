@@ -158,8 +158,6 @@ Killer:AddSwitch("Auto Kill", function(bool)
     end)
 end)
 
-Killer:AddLabel("Multi Targeting")
-
 local targetDropdown = Killer:AddDropdown("Select Target", function(name)
 	if name and not table.find(targetPlayerNames, name) then
 		table.insert(targetPlayerNames, name)
