@@ -3,26 +3,26 @@ local LocalPlayer = Players.LocalPlayer
 
 local whitelist = {
     ["SadNii4"] = true,
-    ["82iwkwjw3"] = true,       -- Substitua por outro usuário
-    ["User2"] = true,       -- Substitua por outro usuário
-    ["User3"] = true,       -- Substitua por outro usuário
-    ["User4"] = true,       -- Substitua por outro usuário
-    ["User5"] = true,       -- Substitua por outro usuário
-    ["User6"] = true,       -- Substitua por outro usuário
-    ["User7"] = true,       -- Substitua por outro usuário
-    ["User8"] = true,       -- Substitua por outro usuário
-    ["User9"] = true,       -- Substitua por outro usuário
-    ["User10"] = true,      -- Substitua por outro usuário
-    ["User11"] = true,      -- Substitua por outro usuário
-    ["User12"] = true,      -- Substitua por outro usuário
-    ["User13"] = true,      -- Substitua por outro usuário
-    ["User14"] = true,      -- Substitua por outro usuário
-    ["User15"] = true,      -- Substitua por outro usuário
-    ["User16"] = true,      -- Substitua por outro usuário
-    ["User17"] = true,      -- Substitua por outro usuário
-    ["User18"] = true,      -- Substitua por outro usuário
-    ["User19"] = true,      -- Substitua por outro usuário
-    ["User20"] = true       -- Substitua por outro usuário
+    ["82iwkwjw3"] = true,
+    ["User2"] = true,
+    ["User3"] = true,
+    ["User4"] = true,
+    ["User5"] = true,
+    ["User6"] = true,
+    ["User7"] = true,
+    ["User8"] = true,
+    ["User9"] = true,
+    ["User10"] = true,
+    ["User11"] = true,
+    ["User12"] = true,
+    ["User13"] = true,
+    ["User14"] = true,
+    ["User15"] = true,
+    ["User16"] = true,
+    ["User17"] = true,
+    ["User18"] = true,
+    ["User19"] = true,
+    ["User20"] = true
 }
 
 if not whitelist[LocalPlayer.Name] then
