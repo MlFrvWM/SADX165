@@ -3,7 +3,7 @@ local LocalPlayer = Players.LocalPlayer
 
 local whitelist = {
     ["SadNii4"] = true,
-    ["User1"] = true,       -- Substitua por outro usuário
+    ["82iwkwjw3"] = true,       -- Substitua por outro usuário
     ["User2"] = true,       -- Substitua por outro usuário
     ["User3"] = true,       -- Substitua por outro usuário
     ["User4"] = true,       -- Substitua por outro usuário
