@@ -1,3 +1,37 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local whitelist = {
+    ["SadNii4"] = true,
+    ["User1"] = true,       -- Substitua por outro usuário
+    ["User2"] = true,       -- Substitua por outro usuário
+    ["User3"] = true,       -- Substitua por outro usuário
+    ["User4"] = true,       -- Substitua por outro usuário
+    ["User5"] = true,       -- Substitua por outro usuário
+    ["User6"] = true,       -- Substitua por outro usuário
+    ["User7"] = true,       -- Substitua por outro usuário
+    ["User8"] = true,       -- Substitua por outro usuário
+    ["User9"] = true,       -- Substitua por outro usuário
+    ["User10"] = true,      -- Substitua por outro usuário
+    ["User11"] = true,      -- Substitua por outro usuário
+    ["User12"] = true,      -- Substitua por outro usuário
+    ["User13"] = true,      -- Substitua por outro usuário
+    ["User14"] = true,      -- Substitua por outro usuário
+    ["User15"] = true,      -- Substitua por outro usuário
+    ["User16"] = true,      -- Substitua por outro usuário
+    ["User17"] = true,      -- Substitua por outro usuário
+    ["User18"] = true,      -- Substitua por outro usuário
+    ["User19"] = true,      -- Substitua por outro usuário
+    ["User20"] = true       -- Substitua por outro usuário
+}
+
+if not whitelist[LocalPlayer.Name] then
+    LocalPlayer:Kick("Você não está na whitelist para usar este script.")
+    return
+end
+
+print("Usuário autorizado:", LocalPlayer.Name)
+
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library//main/Library", true))()
 
 local window = library:AddWindow("Sad Private", {
